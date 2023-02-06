@@ -35,27 +35,37 @@ function SignUp() {
   
   e.preventDefault();
   let userDetails = {
-    firstName : FirstNameRef.current.value,
-    lastName : LastNameRef.current.value,
+    firstname : FirstNameRef.current.value,
+    lastname : LastNameRef.current.value,
     email : Emailref.current.value,
     password : Passsword.current.value,
   }
-  let userAlready_present = false;
-  currentuserdata.forEach((elem)=>{
-    if(elem.email === userDetails.email){
-      userAlready_present = true;
-    }
-  })
-  if(!userAlready_present){
-    registeruser(userDetails,dispatch);
-    alert("Registered successfully")
-    setTimeout(()=>{
-      navigate("/login")
-    },2000)
-  }else{
-    alert("user already exist");
-  }
+  // let userAlready_present = false;
+  // currentuserdata.forEach((elem)=>{
+  //   if(elem.email === userDetails.email){
+  //     userAlready_present = true;
+  //   }
+  // })
+  // if(!userAlready_present){
+  //   registeruser(userDetails,dispatch);
+  //   alert("Registered successfully")
+  //   setTimeout(()=>{
+  //     navigate("/login")
+  //   },2000)
+  // }else{
+  //   alert("user already exist");
+  // }
   
+  fetch('http://localhost:3066/signup',{
+    method:"POST",
+    body: JSON.stringify(userDetails),
+    headers :{
+    "Content-Type":"application/json",
+    },   
+  }).then(res=>res.json())
+  .then((data)=>{
+    console.log(data);
+  }).catch(err=>console.log(err.error))
 
   console.log(userDetails)
  }
